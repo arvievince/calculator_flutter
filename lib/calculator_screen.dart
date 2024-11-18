@@ -20,48 +20,51 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     return Scaffold(
       body: SafeArea(
         bottom: false,
-        child: Column(
-          children: [
-          //output
-
-          Expanded(
-            child: SingleChildScrollView(
-              reverse: true,
-              child: Container(
-                alignment: Alignment.bottomRight,
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  "$number1$operand$number2".isEmpty?"0"
-                  :"$number1$operand$number2",
-                style: const TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.end,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 24),
+          child: Column(
+            children: [
+            //output
+          
+            Expanded(
+              child: SingleChildScrollView(
+                reverse: true,
+                child: Container(
+                  alignment: Alignment.bottomRight,
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    "$number1$operand$number2".isEmpty?"0"
+                    :"$number1$operand$number2",
+                  style: const TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.normal,
+                  ),
+                  textAlign: TextAlign.end,
+                  ),
                 ),
               ),
             ),
-          ),
-          
-          //buttons
-          Wrap(
-            children:  Btn.buttonValues
-            .map((value) => SizedBox(
-              width: screenSize.width/4,
-              height: screenSize.width/5,
-              child: buildButton(value)),
+            
+            //buttons
+            Wrap(
+              children:  Btn.buttonValues
+              .map((value) => SizedBox(  
+                width: screenSize.width/4,
+                height: screenSize.width/5,
+                child: buildButton(value)),)
+              .toList(),
             )
-            .toList(),
-          )
-        ],),
+          ],),
+        ),
       ),
     );
   }
 
 
+
   Widget buildButton(value) {
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.all(2),
       child: Material(
         color: getBtnColor(value),
         clipBehavior: Clip.hardEdge,
@@ -69,14 +72,14 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           borderSide: const BorderSide(
             color: Colors.white24,
           ),
-          borderRadius: BorderRadius.circular(32)
+          borderRadius: BorderRadius.circular(4)
           ),
         child: InkWell(
           onTap: () => onBtnTap(value),
           child: Center(
             
             child: Text(value,style: const TextStyle(
-              fontWeight: FontWeight.bold, 
+              fontWeight: FontWeight.normal, 
               fontSize: 24),
               ),
             ),
@@ -221,15 +224,18 @@ void appendValue(String value){
 
 //Button color
   Color getBtnColor(value){
-    return [Btn.del,Btn.clr].contains(value)?Colors.blueGrey:
-        [
-          Btn.per,
-          Btn.multiply,
-          Btn.add,
-          Btn.subtract,
-          Btn.devide,
-          Btn.equal].contains(value)?
-          Colors.orange: 
-          Colors.black87;
+    if (value == Btn.del) {
+    return Colors.red;  // Change 'del' button color to red
   }
+
+ if (value == Btn.equal) {
+    return Colors.orange;  // Change 'del' button color to red
+  }
+  
+    if ([Btn.per, Btn.multiply, Btn.add, Btn.subtract, Btn.devide, Btn.clr].contains(value)) {
+    return const Color.fromARGB(164, 103, 103, 103);  // Default color for operation buttons
+  } else {
+    return const Color.fromARGB(54, 28, 28, 28);  // Default color for other buttons
+  }
+}
 }
