@@ -10,9 +10,9 @@ class CalculatorScreen extends StatefulWidget {
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
 
-  String number1 = ""; // 1-9
-  String operand = ""; // *-+/
-  String number2 = ""; // 1-9
+  String number1 = ""; 
+  String operand = ""; 
+  String number2 = ""; 
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           padding: const EdgeInsets.only(bottom: 24),
           child: Column(
             children: [
-            //output
+            
           
             Expanded(
               child: SingleChildScrollView(
@@ -88,7 +88,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     );
   }
 
-//funtion for the value
+
 void onBtnTap(String value){
   if(value==Btn.del){
     delete();
@@ -114,7 +114,7 @@ appendValue(value);
 
 }
 
-// calculate the value
+
 void calculate(){
   if(number1.isEmpty) return;
   if(operand.isEmpty) return;
@@ -151,17 +151,17 @@ void calculate(){
   });
 }
 
-// converting to percentage
+
 void convertToPercentage(){
   if(number1.isNotEmpty&&operand.isNotEmpty&&number2.isNotEmpty){
-    // calculate before convertion
+    
     calculate();
   }
   if(operand.isNotEmpty){
-    // cannot be converted
+    
     return;
   }
-  final number = double.parse(number1); // setting it to double number
+  final number = double.parse(number1);
   setState(() {
     number1 = "${(number / 100)}";
     operand = "";
@@ -169,7 +169,7 @@ void convertToPercentage(){
   });
 }
 
-// clear all values on the screen
+
 void clearAll(){
   setState(() {
     number1 = "";
@@ -193,49 +193,46 @@ void delete(){
 //append value to the end
 void appendValue(String value){
 
-  if(value!=Btn.dot&&int.tryParse(value)==null){//not number value, operand is pressed
-    //check if not empty
+  if(value!=Btn.dot&&int.tryParse(value)==null){ 
     if(operand.isNotEmpty&&number2.isNotEmpty){
-      //calculate the assign value
       calculate();
     }
     operand = value;
-    //assiging value to number1 variable
 
-  }else if(number1.isEmpty || operand.isEmpty){ //checking the number if empty and if number1 = 1.2
+  }else if(number1.isEmpty || operand.isEmpty){
     if(value==Btn.dot && number1.contains(Btn.dot)) return;
-    if(value==Btn.dot && (number1.isEmpty || number1==Btn.dot)) { // check if number is empty or 0
+    if(value==Btn.dot && (number1.isEmpty || number1==Btn.dot)) {
       value = "0.";
     }
     
     number1 += value;
-  }else if(number2.isEmpty || operand.isNotEmpty){ //checking the number if empty and if number1 = 1.2
+  }else if(number2.isEmpty || operand.isNotEmpty){ 
     if(value==Btn.dot && number2.contains(Btn.dot)) return;
-    if(value==Btn.dot && (number2.isEmpty || number2==Btn.dot)) { // check if number is empty or 0
+    if(value==Btn.dot && (number2.isEmpty || number2==Btn.dot)) { 
       value = "0.";
     }
     
     number2 += value;
   }
 
-  setState(() {});//showing the press button on the screen
+  setState(() {}); 
   
 }
 
 //Button color
   Color getBtnColor(value){
     if (value == Btn.del) {
-    return Colors.red;  // Change 'del' button color to red
+    return Colors.red;  
   }
 
  if (value == Btn.equal) {
-    return Colors.orange;  // Change 'del' button color to red
+    return Colors.orange;  
   }
   
     if ([Btn.per, Btn.multiply, Btn.add, Btn.subtract, Btn.devide, Btn.clr].contains(value)) {
-    return const Color.fromARGB(164, 103, 103, 103);  // Default color for operation buttons
+    return const Color.fromARGB(164, 103, 103, 103);  
   } else {
-    return const Color.fromARGB(54, 28, 28, 28);  // Default color for other buttons
+    return const Color.fromARGB(54, 28, 28, 28);  
   }
 }
 }
